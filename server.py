@@ -32,11 +32,15 @@ class WebFinderMCPServer:
         self.mcp.prompt()(self.prompts.search_and_crawl_prompt)
         self.mcp.prompt()(self.prompts.news_prompt)
 
-    def run(self, transport: str = "stdio"):
-        self.mcp.run(transport=transport)
+    def run(self, transport: str = "streamable-http", port: int = None, host: str = None):
+        if port is None:
+            port = int(os.getenv("PORT", 8080))
+        if host is None:
+            host = os.getenv("HOST", "0.0.0.0")
+        self.mcp.run(transport=transport, port=port, host=host)
 
 # exportación requerida por `mcp run`
 mcp = WebFinderMCPServer().mcp
 
 if __name__ == "__main__":
-    WebFinderMCPServer().run(transport="stdio")
+    WebFinderMCPServer().run(transport="streamable-http")
