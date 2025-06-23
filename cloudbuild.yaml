@@ -1,0 +1,53 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - europe-west1-docker.pkg.dev/mcps-claiacademy/mcp-web-finder/mcp-web-crawler:latest
+      - -t
+      - europe-west1-docker.pkg.dev/mcps-claiacademy/mcp-web-finder/mcp-web-crawler:$SHORT_SHA
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - europe-west1-docker.pkg.dev/mcps-claiacademy/mcp-web-finder/mcp-web-crawler:latest
+
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - europe-west1-docker.pkg.dev/mcps-claiacademy/mcp-web-finder/mcp-web-crawler:$SHORT_SHA
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - mcp-web-crawler
+      - --image
+      - europe-west1-docker.pkg.dev/mcps-claiacademy/mcp-web-finder/mcp-web-crawler:$SHORT_SHA
+      - --region
+      - europe-west1
+      - --platform
+      - managed
+      - --allow-unauthenticated
+      - --port
+      - "8080"
+      - --set-env-vars
+      - GOOGLE_API_KEY=$$GOOGLE_API_KEY,GOOGLE_CSE_ID=$$GOOGLE_CSE_ID,NEWS_API_KEY=$$NEWS_API_KEY
+    secretEnv:
+      - GOOGLE_API_KEY
+      - GOOGLE_CSE_ID
+      - NEWS_API_KEY
+
+availableSecrets:
+  secretManager:
+    - versionName: projects/mcps-claiacademy/secrets/google-api-key/versions/latest
+      env: GOOGLE_API_KEY
+    - versionName: projects/mcps-claiacademy/secrets/google-cse-id/versions/latest
+      env: GOOGLE_CSE_ID
+    - versionName: projects/mcps-claiacademy/secrets/news-api-key/versions/latest
+      env: NEWS_API_KEY
+
+options:
+  logging: CLOUD_LOGGING_ONLY
