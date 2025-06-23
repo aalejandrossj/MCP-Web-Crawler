@@ -49,7 +49,7 @@ class WebFinderPrompts:
             base.UserMessage(
                 f"""Busca noticias sobre: {query}
                 
-                Obtén las noticias más recientes y preséntalas con:
+                Obtén las noticias más recientes y preséntala con:
                 - Títulos
                 - URL
                 - Descripción"""
