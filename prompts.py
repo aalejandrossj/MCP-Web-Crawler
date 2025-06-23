@@ -50,7 +50,7 @@ class WebFinderPrompts:
                 f"""Busca noticias sobre: {query}
                 
                 Obtén las noticias más recientes y preséntalas con:
-                - Título
+                - Títulos
                 - URL
                 - Descripción"""
             ),
