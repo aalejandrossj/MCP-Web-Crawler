@@ -38,7 +38,7 @@ class WebFinderPrompts:
                 f"""Busca en Gogle: {query}
                 
                 Obtén las {num_results} páginas más relevantes y extrae su contenido.
-                Presenta el contenido de cada página en formato limpio y markdown"""
+                Presenta el contenido de cada página en formato limpiio y markdown"""
             ),
         ]
     
