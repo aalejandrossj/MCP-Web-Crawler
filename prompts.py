@@ -35,7 +35,7 @@ class WebFinderPrompts:
         """Prompt to search and crawl content from Google results."""
         return [
             base.UserMessage(
-                f"""Busca en Google: {query}
+                f"""Busca en Gogle: {query}
                 
                 Obtén las {num_results} páginas más relevantes y extrae su contenido.
                 Presenta el contenido de cada página en formato markdown."""
