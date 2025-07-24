@@ -1,5 +1,6 @@
 import os, sys, gc, logging, requests, re
-from typing import TypedDict, List
+from typing import List
+from dataclasses import dataclass
 
 from dotenv import load_dotenv
 from langchain_google_community import GoogleSearchAPIWrapper
@@ -32,7 +33,8 @@ for logger_name in ["playwright", "asyncio", "httpx", "urllib3"]:
 load_dotenv()
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
-class NewsArticle(TypedDict):
+@dataclass
+class NewsArticle:
     title: str
     url: str
     description: str
@@ -310,11 +312,11 @@ class WebFinderTools:
             r.raise_for_status()
             articles = r.json().get("articles", [])
             return [
-                {
-                    "title": art.get("title", ""),
-                    "url": art.get("url", ""),
-                    "description": art.get("description", "")
-                }
+                NewsArticle(
+                    title=art.get("title", ""),
+                    url=art.get("url", ""),
+                    description=art.get("description", "")
+                )
                 for art in articles
                 if art.get("title") and art.get("url")
             ]
