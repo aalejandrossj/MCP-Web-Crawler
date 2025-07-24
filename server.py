@@ -12,7 +12,8 @@ log = logging.getLogger(__name__)
 
 class WebFinderMCPServer:
     def __init__(self, name: str = "WebFinder"):
-        self.mcp = FastMCP(name, stateless_http=True)  # Fix para streamable-http
+        self.mcp = FastMCP(name, stateless_http=True)
+        
         self.tools = WebFinderTools()
         self.prompts = WebFinderPrompts()
         self._register_tools()
