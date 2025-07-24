@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 class WebFinderMCPServer:
     def __init__(self, name: str = "WebFinder"):
-        self.mcp = FastMCP(name)
+        self.mcp = FastMCP(name, stateless_http=True)  # Fix para streamable-http
         self.tools = WebFinderTools()
         self.prompts = WebFinderPrompts()
         self._register_tools()
@@ -34,7 +34,7 @@ class WebFinderMCPServer:
 
     def run(self, transport: str = "streamable-http", port: int = None, host: str = None):
         if port is None:
-            port = int(os.getenv("PORT", 8080))
+            port = int(os.getenv("PORT", 8081))
         if host is None:
             host = os.getenv("HOST", "0.0.0.0")
         log.info(f"Starting server on {host}:{port} with transport {transport}")
