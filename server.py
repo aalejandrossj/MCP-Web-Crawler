@@ -37,10 +37,18 @@ class WebFinderMCPServer:
             port = int(os.getenv("PORT", 8080))
         if host is None:
             host = os.getenv("HOST", "0.0.0.0")
-        self.mcp.run(transport=transport, port=port, host=host)
+        log.info(f"Starting server on {host}:{port} with transport {transport}")
+        try:
+            self.mcp.run(transport=transport, port=port, host=host)
+        except Exception as e:
+            log.error(f"Failed to start server: {e}")
+            raise
 
 # exportación requerida por `mcp run`
 mcp = WebFinderMCPServer().mcp
 
 if __name__ == "__main__":
-    WebFinderMCPServer().run(transport="streamable-http")
+    log.info("Initializing WebFinder MCP Server...")
+    server = WebFinderMCPServer()
+    log.info("Server initialized, starting...")
+    server.run(transport="streamable-http")
