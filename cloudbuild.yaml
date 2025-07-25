@@ -39,14 +39,6 @@ steps:
       - GOOGLE_API_KEY=google-api-key:latest,GOOGLE_CSE_ID=google-cse-id:latest,NEWS_API_KEY=news-api-key:latest
 
 
-availableSecrets:
-  secretManager:
-    - versionName: projects/mcps-claiacademy/secrets/google-api-key/versions/latest
-      env: GOOGLE_API_KEY
-    - versionName: projects/mcps-claiacademy/secrets/google-cse-id/versions/latest
-      env: GOOGLE_CSE_ID
-    - versionName: projects/mcps-claiacademy/secrets/news-api-key/versions/latest
-      env: NEWS_API_KEY
 
 options:
   logging: CLOUD_LOGGING_ONLY
