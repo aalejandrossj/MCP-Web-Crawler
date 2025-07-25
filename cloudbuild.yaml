@@ -33,12 +33,11 @@ steps:
       - --allow-unauthenticated
       - --port
       - "8080"
-      - --set-env-vars
-      - GOOGLE_API_KEY=$$GOOGLE_API_KEY,GOOGLE_CSE_ID=$$GOOGLE_CSE_ID,NEWS_API_KEY=$$NEWS_API_KEY
-    secretEnv:
-      - GOOGLE_API_KEY
-      - GOOGLE_CSE_ID
-      - NEWS_API_KEY
+      - --memory
+      - "1Gi"
+      - --set-secrets
+      - GOOGLE_API_KEY=google-api-key:latest,GOOGLE_CSE_ID=google-cse-id:latest,NEWS_API_KEY=news-api-key:latest
+
 
 availableSecrets:
   secretManager:

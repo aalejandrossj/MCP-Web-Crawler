@@ -1,5 +1,6 @@
 import sys, logging, os
 from fastmcp import FastMCP
+from starlette.responses import PlainTextResponse    # <-- nuevo
 from tools import WebFinderTools
 from prompts import WebFinderPrompts
 
@@ -18,6 +19,11 @@ class WebFinderMCPServer:
         self.prompts = WebFinderPrompts()
         self._register_tools()
         self._register_prompts()
+
+        # --- health endpoint ---
+        @self.mcp.custom_route("/health", methods=["GET"])
+        async def health(_):
+            return PlainTextResponse("ok")
 
     # tools
     def _register_tools(self):
